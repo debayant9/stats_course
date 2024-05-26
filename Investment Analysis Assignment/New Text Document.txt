@@ -1,0 +1,51 @@
+# rounds2['company_permalink'] = pd.DataFrame(map(lambda x: x.lower(), rounds2.company_permalink))
+
+# UniqueCompaniesInRound2 = pd.DataFrame(rounds2.company_permalink.unique())
+# UniqueCompaniesInRound2 = pd.DataFrame(rounds2.nunique(axis = 1))
+# UniqueCompaniesInRound2.count()
+
+# dupcheck = companies.permalink
+# df = dupcheck[dupcheck.duplicated()]
+# print(df)
+# numberofcompanies = companies['permalink'].count()
+# numberofcompanies
+
+#help(pd.DataFrame.rename_axis)
+#companies.set_index(companies.company_permalink)
+#companies.set_index(companies.permalink)
+#companies.rename_axis("company_permalink")
+# help
+
+# UniqueCompaniesInRound2 = pd.DataFrame(rounds2.company_permalink.unique())
+# rounds2.isnull().sum()
+
+UniqueCompanyNamesInRounds2 = pd.DataFrame(rounds2.nunique(axis = 0))
+
+
+companies.loc[companies.company_permalink == inRounds2, 'company_permalink']
+master_frame = pd.merge(rounds2, companies, on='company_permalink', how='inner', indicator='Exist')
+diff_df = master_frame.loc[master_frame['Exist'] != 'both']
+
+# Check whether NaN value exists in raised_amount_usd column
+master_frame.raised_amount_usd.isnull().sum()
+
+
+
+# # master_frame[master_frame.country_code.isnull()]
+# allcountries = pd.DataFrame(df_by_country['raised_amount_usd'].mean())
+
+# # vc o = allcountries.reset_index()
+# allcountries
+# # allcountries.loc[allcountries.funding_round_type == 'venture', :]
+
+# # allcountrie = low.sort_values('raised_amount_usd', ascending = False).astype(str)
+# # allcountrie
+# # df_by_country['raised_amount_usd'].describe()
+
+df_by_country = master_frame.groupby(['funding_round_type','country_code'])
+df_by_country
+# master_frame[master_frame['country_code'] == 'IND']
+
+# Replacing all NaN values with 0 in raised_amount_usd column
+master_frame.loc[pd.isnull(master_frame['raised_amount_usd']), ['raised_amount_usd']] = 0
+master_frame.raised_amount_usd.isnull().sum()
